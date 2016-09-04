@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AutoProxy
 {
-    public partial class Form1 : Form
+    public partial class MainConfig : Form
     {
-        public Form1()
+        public MainConfig()
         {
             InitializeComponent();
         }
