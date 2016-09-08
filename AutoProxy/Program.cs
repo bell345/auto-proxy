@@ -57,22 +57,26 @@ namespace AutoProxy
             {
                 stream = File.Open(GetFileName("abcdef"), FileMode.Open);
                 nw = (Network)serializer.Deserialize(stream);
+                stream.Close();
+                if (nw.DataVersion < Network.CURRENT_DATA_VERSION)
+                    nw = null;
             }
             catch (FileNotFoundException) { }
             catch (IOException ex)
             {
                 HandleException(ex);
-                return;
             }
 
             if (nw == null)
             {
                 nw = new Network();
-                nw.name = "abcdef";
-                nw.triggerMethod = TriggerMethod.CONNECTED_AP;
-                nw.triggerQuery = "SWIRELESS-2.4";
+                nw.Name = "abcdef";
+                nw.TriggerMethod = TriggerMethod.CONNECTED_AP;
+                nw.TriggerQuery = "SWIRELESS-2.4";
             }
-            bool trigres = nw.testForTrigger();
+            Console.Out.WriteLine(String.Format("Name: {0}", nw.Name));
+            Console.Out.WriteLine(String.Format("Query: {0}", nw.TriggerQuery));
+            bool trigres = nw.TestForTrigger();
             if (trigres)
                 Console.Out.WriteLine("Trigger success");
             else
@@ -80,14 +84,13 @@ namespace AutoProxy
             
             try
             {
-                stream = File.Create(GetFileName(nw.name));
+                stream = File.Create(GetFileName(nw.Name));
                 serializer.Serialize(stream, nw);
                 stream.Close();
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
                 HandleException(ex);
-                return;
             }
 
             Application.EnableVisualStyles();

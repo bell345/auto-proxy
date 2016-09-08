@@ -30,47 +30,49 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.newNetworkButton = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.networkNameBox = new System.Windows.Forms.ComboBox();
+            this.triggerGroup = new System.Windows.Forms.GroupBox();
+            this.triggerQueryBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.triggerMethodCombo = new System.Windows.Forms.ComboBox();
+            this.proxyGroup = new System.Windows.Forms.GroupBox();
+            this.proxyAutoConfigBox = new System.Windows.Forms.TextBox();
+            this.proxyAutoConfigCheckbox = new System.Windows.Forms.CheckBox();
+            this.proxyLocalBypassCheckbox = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.proxyExceptionsBox = new System.Windows.Forms.TextBox();
+            this.proxyPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.proxyUrlBox = new System.Windows.Forms.TextBox();
+            this.sharedProxyCheckbox = new System.Windows.Forms.CheckBox();
+            this.proxyTypeCombo = new System.Windows.Forms.ComboBox();
+            this.automaticProxyButton = new System.Windows.Forms.RadioButton();
+            this.disableProxyButton = new System.Windows.Forms.RadioButton();
+            this.enableProxyButton = new System.Windows.Forms.RadioButton();
+            this.scriptGroup = new System.Windows.Forms.GroupBox();
+            this.disconnectScriptButton = new System.Windows.Forms.Button();
+            this.connectScriptButton = new System.Windows.Forms.Button();
+            this.disconnectScriptBox = new System.Windows.Forms.TextBox();
+            this.connectScriptBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.connectFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.disconnectFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.applyButton = new System.Windows.Forms.Button();
+            this.checkButton = new System.Windows.Forms.Button();
+            this.removeNetworkButton = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.groupBox4.SuspendLayout();
+            this.triggerGroup.SuspendLayout();
+            this.proxyGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.proxyPortUpDown)).BeginInit();
+            this.scriptGroup.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,8 +80,9 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.removeNetworkButton);
             this.groupBox1.Controls.Add(this.newNetworkButton);
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.networkNameBox);
             this.groupBox1.Location = new System.Drawing.Point(13, 27);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(262, 48);
@@ -90,70 +93,48 @@
             // newNetworkButton
             // 
             this.newNetworkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.newNetworkButton.Location = new System.Drawing.Point(204, 20);
+            this.newNetworkButton.Location = new System.Drawing.Point(123, 18);
             this.newNetworkButton.Name = "newNetworkButton";
             this.newNetworkButton.Size = new System.Drawing.Size(52, 23);
             this.newNetworkButton.TabIndex = 1;
             this.newNetworkButton.Text = "New";
             this.newNetworkButton.UseVisualStyleBackColor = true;
+            this.newNetworkButton.Click += new System.EventHandler(this.newNetworkButton_Click);
             // 
-            // comboBox1
+            // networkNameBox
             // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.networkNameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(7, 20);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(190, 21);
-            this.comboBox1.TabIndex = 0;
+            this.networkNameBox.FormattingEnabled = true;
+            this.networkNameBox.Location = new System.Drawing.Point(7, 20);
+            this.networkNameBox.Name = "networkNameBox";
+            this.networkNameBox.Size = new System.Drawing.Size(110, 21);
+            this.networkNameBox.TabIndex = 0;
+            this.networkNameBox.SelectedIndexChanged += new System.EventHandler(this.networkNameBox_SelectedIndexChanged);
             // 
-            // groupBox2
+            // triggerGroup
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.triggerGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.comboBox3);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.textBox1);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.comboBox2);
-            this.groupBox2.Location = new System.Drawing.Point(13, 81);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(262, 90);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Network Trigger";
+            this.triggerGroup.Controls.Add(this.triggerQueryBox);
+            this.triggerGroup.Controls.Add(this.label2);
+            this.triggerGroup.Controls.Add(this.label1);
+            this.triggerGroup.Controls.Add(this.triggerMethodCombo);
+            this.triggerGroup.Location = new System.Drawing.Point(13, 81);
+            this.triggerGroup.Name = "triggerGroup";
+            this.triggerGroup.Size = new System.Drawing.Size(262, 68);
+            this.triggerGroup.TabIndex = 1;
+            this.triggerGroup.TabStop = false;
+            this.triggerGroup.Text = "Network Trigger";
             // 
-            // comboBox3
+            // triggerQueryBox
             // 
-            this.comboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.triggerQueryBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "(All Interfaces)"});
-            this.comboBox3.Location = new System.Drawing.Point(71, 61);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(185, 21);
-            this.comboBox3.TabIndex = 5;
-            // 
-            // label3
-            // 
-            this.label3.Location = new System.Drawing.Point(7, 61);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 21);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Interface";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(71, 41);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(185, 20);
-            this.textBox1.TabIndex = 3;
+            this.triggerQueryBox.Location = new System.Drawing.Point(71, 41);
+            this.triggerQueryBox.Name = "triggerQueryBox";
+            this.triggerQueryBox.Size = new System.Drawing.Size(185, 20);
+            this.triggerQueryBox.TabIndex = 3;
             // 
             // label2
             // 
@@ -173,217 +154,245 @@
             this.label1.Text = "Method";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // comboBox2
+            // triggerMethodCombo
             // 
-            this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.triggerMethodCombo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.triggerMethodCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.triggerMethodCombo.FormattingEnabled = true;
+            this.triggerMethodCombo.Items.AddRange(new object[] {
             "Wireless AP (connected)",
             "Wireless AP (available)",
             "Gateway MAC Address",
             "Server is available"});
-            this.comboBox2.Location = new System.Drawing.Point(71, 20);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(185, 21);
-            this.comboBox2.TabIndex = 0;
+            this.triggerMethodCombo.Location = new System.Drawing.Point(71, 20);
+            this.triggerMethodCombo.Name = "triggerMethodCombo";
+            this.triggerMethodCombo.Size = new System.Drawing.Size(185, 21);
+            this.triggerMethodCombo.TabIndex = 0;
             // 
-            // groupBox3
+            // proxyGroup
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.proxyGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.textBox6);
-            this.groupBox3.Controls.Add(this.checkBox3);
-            this.groupBox3.Controls.Add(this.checkBox2);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.textBox3);
-            this.groupBox3.Controls.Add(this.numericUpDown1);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.textBox2);
-            this.groupBox3.Controls.Add(this.checkBox1);
-            this.groupBox3.Controls.Add(this.comboBox4);
-            this.groupBox3.Controls.Add(this.radioButton3);
-            this.groupBox3.Controls.Add(this.radioButton2);
-            this.groupBox3.Controls.Add(this.radioButton1);
-            this.groupBox3.Location = new System.Drawing.Point(13, 177);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(262, 239);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Proxy Settings";
+            this.proxyGroup.Controls.Add(this.proxyAutoConfigBox);
+            this.proxyGroup.Controls.Add(this.proxyAutoConfigCheckbox);
+            this.proxyGroup.Controls.Add(this.proxyLocalBypassCheckbox);
+            this.proxyGroup.Controls.Add(this.label5);
+            this.proxyGroup.Controls.Add(this.proxyExceptionsBox);
+            this.proxyGroup.Controls.Add(this.proxyPortUpDown);
+            this.proxyGroup.Controls.Add(this.label4);
+            this.proxyGroup.Controls.Add(this.proxyUrlBox);
+            this.proxyGroup.Controls.Add(this.sharedProxyCheckbox);
+            this.proxyGroup.Controls.Add(this.proxyTypeCombo);
+            this.proxyGroup.Location = new System.Drawing.Point(13, 186);
+            this.proxyGroup.Name = "proxyGroup";
+            this.proxyGroup.Size = new System.Drawing.Size(262, 208);
+            this.proxyGroup.TabIndex = 2;
+            this.proxyGroup.TabStop = false;
+            this.proxyGroup.Text = "Proxy Settings";
             // 
-            // checkBox3
+            // proxyAutoConfigBox
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(10, 182);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(168, 17);
-            this.checkBox3.TabIndex = 11;
-            this.checkBox3.Text = "Automatic Configuration Script";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.proxyAutoConfigBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.proxyAutoConfigBox.Enabled = false;
+            this.proxyAutoConfigBox.Location = new System.Drawing.Point(7, 181);
+            this.proxyAutoConfigBox.Name = "proxyAutoConfigBox";
+            this.proxyAutoConfigBox.Size = new System.Drawing.Size(250, 20);
+            this.proxyAutoConfigBox.TabIndex = 12;
             // 
-            // checkBox2
+            // proxyAutoConfigCheckbox
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(10, 159);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(156, 17);
-            this.checkBox2.TabIndex = 10;
-            this.checkBox2.Text = "Bypass for Local Addresses";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.proxyAutoConfigCheckbox.AutoSize = true;
+            this.proxyAutoConfigCheckbox.Location = new System.Drawing.Point(11, 157);
+            this.proxyAutoConfigCheckbox.Name = "proxyAutoConfigCheckbox";
+            this.proxyAutoConfigCheckbox.Size = new System.Drawing.Size(168, 17);
+            this.proxyAutoConfigCheckbox.TabIndex = 11;
+            this.proxyAutoConfigCheckbox.Text = "Automatic Configuration Script";
+            this.proxyAutoConfigCheckbox.UseVisualStyleBackColor = true;
+            this.proxyAutoConfigCheckbox.CheckedChanged += new System.EventHandler(this.proxyAutoConfigCheckbox_CheckedChanged);
+            // 
+            // proxyLocalBypassCheckbox
+            // 
+            this.proxyLocalBypassCheckbox.AutoSize = true;
+            this.proxyLocalBypassCheckbox.Location = new System.Drawing.Point(11, 134);
+            this.proxyLocalBypassCheckbox.Name = "proxyLocalBypassCheckbox";
+            this.proxyLocalBypassCheckbox.Size = new System.Drawing.Size(156, 17);
+            this.proxyLocalBypassCheckbox.TabIndex = 10;
+            this.proxyLocalBypassCheckbox.Text = "Bypass for Local Addresses";
+            this.proxyLocalBypassCheckbox.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(7, 92);
+            this.label5.Location = new System.Drawing.Point(8, 67);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(237, 23);
             this.label5.TabIndex = 9;
             this.label5.Text = "Exceptions (separated by semicolons):";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // textBox3
+            // proxyExceptionsBox
             // 
-            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.proxyExceptionsBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3.Location = new System.Drawing.Point(6, 118);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(250, 35);
-            this.textBox3.TabIndex = 8;
+            this.proxyExceptionsBox.Location = new System.Drawing.Point(7, 93);
+            this.proxyExceptionsBox.Multiline = true;
+            this.proxyExceptionsBox.Name = "proxyExceptionsBox";
+            this.proxyExceptionsBox.Size = new System.Drawing.Size(250, 35);
+            this.proxyExceptionsBox.TabIndex = 8;
             // 
-            // numericUpDown1
+            // proxyPortUpDown
             // 
-            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown1.Location = new System.Drawing.Point(194, 70);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(62, 20);
-            this.numericUpDown1.TabIndex = 7;
+            this.proxyPortUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.proxyPortUpDown.Location = new System.Drawing.Point(195, 45);
+            this.proxyPortUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.proxyPortUpDown.Name = "proxyPortUpDown";
+            this.proxyPortUpDown.Size = new System.Drawing.Size(62, 20);
+            this.proxyPortUpDown.TabIndex = 7;
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(7, 69);
+            this.label4.Location = new System.Drawing.Point(8, 44);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 23);
             this.label4.TabIndex = 6;
             this.label4.Text = "URL/Port";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // textBox2
+            // proxyUrlBox
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.proxyUrlBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(72, 71);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(116, 20);
-            this.textBox2.TabIndex = 5;
+            this.proxyUrlBox.Location = new System.Drawing.Point(73, 46);
+            this.proxyUrlBox.Name = "proxyUrlBox";
+            this.proxyUrlBox.Size = new System.Drawing.Size(116, 20);
+            this.proxyUrlBox.TabIndex = 5;
             // 
-            // checkBox1
+            // sharedProxyCheckbox
             // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(172, 46);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(84, 17);
-            this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "All Protocols";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.sharedProxyCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.sharedProxyCheckbox.AutoSize = true;
+            this.sharedProxyCheckbox.Location = new System.Drawing.Point(173, 21);
+            this.sharedProxyCheckbox.Name = "sharedProxyCheckbox";
+            this.sharedProxyCheckbox.Size = new System.Drawing.Size(84, 17);
+            this.sharedProxyCheckbox.TabIndex = 4;
+            this.sharedProxyCheckbox.Text = "All Protocols";
+            this.sharedProxyCheckbox.UseVisualStyleBackColor = true;
+            this.sharedProxyCheckbox.CheckedChanged += new System.EventHandler(this.sharedProxyCheckbox_CheckedChanged);
             // 
-            // comboBox4
+            // proxyTypeCombo
             // 
-            this.comboBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.proxyTypeCombo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(6, 44);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(160, 21);
-            this.comboBox4.TabIndex = 3;
+            this.proxyTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.proxyTypeCombo.FormattingEnabled = true;
+            this.proxyTypeCombo.Items.AddRange(new object[] {
+            "HTTP",
+            "HTTPS",
+            "FTP",
+            "SOCKS"});
+            this.proxyTypeCombo.Location = new System.Drawing.Point(7, 19);
+            this.proxyTypeCombo.Name = "proxyTypeCombo";
+            this.proxyTypeCombo.Size = new System.Drawing.Size(160, 21);
+            this.proxyTypeCombo.TabIndex = 3;
+            this.proxyTypeCombo.DropDown += new System.EventHandler(this.updateNetworkFromUI);
+            this.proxyTypeCombo.SelectedIndexChanged += new System.EventHandler(this.reloadUI);
             // 
-            // radioButton3
+            // automaticProxyButton
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Checked = true;
-            this.radioButton3.Location = new System.Drawing.Point(137, 19);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(72, 17);
-            this.radioButton3.TabIndex = 2;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Automatic";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.automaticProxyButton.AutoSize = true;
+            this.automaticProxyButton.Checked = true;
+            this.automaticProxyButton.Location = new System.Drawing.Point(203, 159);
+            this.automaticProxyButton.Name = "automaticProxyButton";
+            this.automaticProxyButton.Size = new System.Drawing.Size(72, 17);
+            this.automaticProxyButton.TabIndex = 2;
+            this.automaticProxyButton.TabStop = true;
+            this.automaticProxyButton.Text = "Automatic";
+            this.automaticProxyButton.UseVisualStyleBackColor = true;
+            this.automaticProxyButton.CheckedChanged += new System.EventHandler(this.radioCheckedChanged);
             // 
-            // radioButton2
+            // disableProxyButton
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(71, 19);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(60, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Disable";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.disableProxyButton.AutoSize = true;
+            this.disableProxyButton.Location = new System.Drawing.Point(137, 159);
+            this.disableProxyButton.Name = "disableProxyButton";
+            this.disableProxyButton.Size = new System.Drawing.Size(60, 17);
+            this.disableProxyButton.TabIndex = 1;
+            this.disableProxyButton.TabStop = true;
+            this.disableProxyButton.Text = "Disable";
+            this.disableProxyButton.UseVisualStyleBackColor = true;
+            this.disableProxyButton.CheckedChanged += new System.EventHandler(this.radioCheckedChanged);
             // 
-            // radioButton1
+            // enableProxyButton
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(7, 20);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(58, 17);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Enable";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.enableProxyButton.AutoSize = true;
+            this.enableProxyButton.Location = new System.Drawing.Point(73, 159);
+            this.enableProxyButton.Name = "enableProxyButton";
+            this.enableProxyButton.Size = new System.Drawing.Size(58, 17);
+            this.enableProxyButton.TabIndex = 0;
+            this.enableProxyButton.TabStop = true;
+            this.enableProxyButton.Text = "Enable";
+            this.enableProxyButton.UseVisualStyleBackColor = true;
+            this.enableProxyButton.CheckedChanged += new System.EventHandler(this.radioCheckedChanged);
             // 
-            // groupBox4
+            // scriptGroup
             // 
-            this.groupBox4.Controls.Add(this.button2);
-            this.groupBox4.Controls.Add(this.button1);
-            this.groupBox4.Controls.Add(this.textBox5);
-            this.groupBox4.Controls.Add(this.textBox4);
-            this.groupBox4.Controls.Add(this.label7);
-            this.groupBox4.Controls.Add(this.label6);
-            this.groupBox4.Location = new System.Drawing.Point(13, 422);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(262, 71);
-            this.groupBox4.TabIndex = 3;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Scripts";
+            this.scriptGroup.Controls.Add(this.disconnectScriptButton);
+            this.scriptGroup.Controls.Add(this.connectScriptButton);
+            this.scriptGroup.Controls.Add(this.disconnectScriptBox);
+            this.scriptGroup.Controls.Add(this.connectScriptBox);
+            this.scriptGroup.Controls.Add(this.label7);
+            this.scriptGroup.Controls.Add(this.label6);
+            this.scriptGroup.Location = new System.Drawing.Point(13, 400);
+            this.scriptGroup.Name = "scriptGroup";
+            this.scriptGroup.Size = new System.Drawing.Size(262, 71);
+            this.scriptGroup.TabIndex = 3;
+            this.scriptGroup.TabStop = false;
+            this.scriptGroup.Text = "Scripts";
             // 
-            // button2
+            // disconnectScriptButton
             // 
-            this.button2.Location = new System.Drawing.Point(228, 40);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(28, 20);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "...";
-            this.button2.UseVisualStyleBackColor = true;
+            this.disconnectScriptButton.Location = new System.Drawing.Point(228, 40);
+            this.disconnectScriptButton.Name = "disconnectScriptButton";
+            this.disconnectScriptButton.Size = new System.Drawing.Size(28, 20);
+            this.disconnectScriptButton.TabIndex = 13;
+            this.disconnectScriptButton.Text = "...";
+            this.disconnectScriptButton.UseVisualStyleBackColor = true;
+            this.disconnectScriptButton.Click += new System.EventHandler(this.disconnectScriptButton_Click);
             // 
-            // button1
+            // connectScriptButton
             // 
-            this.button1.Location = new System.Drawing.Point(228, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(28, 20);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "...";
-            this.button1.UseVisualStyleBackColor = true;
+            this.connectScriptButton.Location = new System.Drawing.Point(228, 19);
+            this.connectScriptButton.Name = "connectScriptButton";
+            this.connectScriptButton.Size = new System.Drawing.Size(28, 20);
+            this.connectScriptButton.TabIndex = 12;
+            this.connectScriptButton.Text = "...";
+            this.connectScriptButton.UseVisualStyleBackColor = true;
+            this.connectScriptButton.Click += new System.EventHandler(this.connectScriptButton_Click);
             // 
-            // textBox5
+            // disconnectScriptBox
             // 
-            this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.disconnectScriptBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox5.Location = new System.Drawing.Point(99, 41);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(123, 20);
-            this.textBox5.TabIndex = 10;
+            this.disconnectScriptBox.Location = new System.Drawing.Point(99, 41);
+            this.disconnectScriptBox.Name = "disconnectScriptBox";
+            this.disconnectScriptBox.ReadOnly = true;
+            this.disconnectScriptBox.Size = new System.Drawing.Size(123, 20);
+            this.disconnectScriptBox.TabIndex = 10;
             // 
-            // textBox4
+            // connectScriptBox
             // 
-            this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.connectScriptBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox4.Location = new System.Drawing.Point(99, 19);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(123, 20);
-            this.textBox4.TabIndex = 9;
+            this.connectScriptBox.Location = new System.Drawing.Point(99, 19);
+            this.connectScriptBox.Name = "connectScriptBox";
+            this.connectScriptBox.ReadOnly = true;
+            this.connectScriptBox.Size = new System.Drawing.Size(123, 20);
+            this.connectScriptBox.TabIndex = 9;
             // 
             // label7
             // 
@@ -403,13 +412,17 @@
             this.label6.Text = "On Connect";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // openFileDialog1
+            // connectFileDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.connectFileDialog.FileName = "connect.bat";
+            this.connectFileDialog.Filter = "VBScript files|*.vbs;*.vbe|JScript files|*.js;*.jse|WSH files|*.wsf;*.wsh|Batch f" +
+    "iles|*.bat;*.cmd|Executable files|*.com;*.exe";
             // 
-            // openFileDialog2
+            // disconnectFileDialog
             // 
-            this.openFileDialog2.FileName = "openFileDialog2";
+            this.disconnectFileDialog.FileName = "disconnect.vbs";
+            this.disconnectFileDialog.Filter = "VBScript files|*.vbs;*.vbe|JScript files|*.js;*.jse|WSH files|*.wsf;*.wsh|Batch f" +
+    "iles|*.bat;*.cmd|Executable files|*.com;*.exe";
             // 
             // menuStrip1
             // 
@@ -430,6 +443,13 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -438,48 +458,82 @@
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // textBox6
+            // applyButton
             // 
-            this.textBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox6.Location = new System.Drawing.Point(6, 206);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(250, 20);
-            this.textBox6.TabIndex = 12;
+            this.applyButton.Location = new System.Drawing.Point(12, 477);
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Size = new System.Drawing.Size(182, 23);
+            this.applyButton.TabIndex = 5;
+            this.applyButton.Text = "Save";
+            this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
+            // 
+            // checkButton
+            // 
+            this.checkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkButton.Location = new System.Drawing.Point(200, 477);
+            this.checkButton.Name = "checkButton";
+            this.checkButton.Size = new System.Drawing.Size(75, 23);
+            this.checkButton.TabIndex = 7;
+            this.checkButton.Text = "Check";
+            this.checkButton.UseVisualStyleBackColor = true;
+            this.checkButton.Click += new System.EventHandler(this.checkButton_Click);
+            // 
+            // removeNetworkButton
+            // 
+            this.removeNetworkButton.Location = new System.Drawing.Point(181, 18);
+            this.removeNetworkButton.Name = "removeNetworkButton";
+            this.removeNetworkButton.Size = new System.Drawing.Size(75, 23);
+            this.removeNetworkButton.TabIndex = 2;
+            this.removeNetworkButton.Text = "Remove";
+            this.removeNetworkButton.UseVisualStyleBackColor = true;
+            this.removeNetworkButton.Click += new System.EventHandler(this.removeNetworkButton_Click);
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(12, 152);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(54, 31);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Proxy: ";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MainConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(287, 505);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
+            this.ClientSize = new System.Drawing.Size(287, 518);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.checkButton);
+            this.Controls.Add(this.applyButton);
+            this.Controls.Add(this.scriptGroup);
+            this.Controls.Add(this.proxyGroup);
+            this.Controls.Add(this.triggerGroup);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.enableProxyButton);
+            this.Controls.Add(this.automaticProxyButton);
+            this.Controls.Add(this.disableProxyButton);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainConfig";
             this.Text = "Auto Proxy";
             this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.triggerGroup.ResumeLayout(false);
+            this.triggerGroup.PerformLayout();
+            this.proxyGroup.ResumeLayout(false);
+            this.proxyGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.proxyPortUpDown)).EndInit();
+            this.scriptGroup.ResumeLayout(false);
+            this.scriptGroup.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -491,42 +545,44 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button newNetworkButton;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox networkNameBox;
+        private System.Windows.Forms.GroupBox triggerGroup;
+        private System.Windows.Forms.TextBox triggerQueryBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.ComboBox triggerMethodCombo;
+        private System.Windows.Forms.GroupBox proxyGroup;
+        private System.Windows.Forms.RadioButton automaticProxyButton;
+        private System.Windows.Forms.RadioButton disableProxyButton;
+        private System.Windows.Forms.RadioButton enableProxyButton;
+        private System.Windows.Forms.NumericUpDown proxyPortUpDown;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.TextBox proxyUrlBox;
+        private System.Windows.Forms.CheckBox sharedProxyCheckbox;
+        private System.Windows.Forms.ComboBox proxyTypeCombo;
+        private System.Windows.Forms.CheckBox proxyAutoConfigCheckbox;
+        private System.Windows.Forms.CheckBox proxyLocalBypassCheckbox;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox proxyExceptionsBox;
+        private System.Windows.Forms.GroupBox scriptGroup;
+        private System.Windows.Forms.Button disconnectScriptButton;
+        private System.Windows.Forms.Button connectScriptButton;
+        private System.Windows.Forms.TextBox disconnectScriptBox;
+        private System.Windows.Forms.TextBox connectScriptBox;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private System.Windows.Forms.OpenFileDialog connectFileDialog;
+        private System.Windows.Forms.OpenFileDialog disconnectFileDialog;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox proxyAutoConfigBox;
+        private System.Windows.Forms.Button applyButton;
+        private System.Windows.Forms.Button checkButton;
+        private System.Windows.Forms.Button removeNetworkButton;
+        private System.Windows.Forms.Label label3;
     }
 }
 

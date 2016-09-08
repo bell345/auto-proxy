@@ -1,10 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 using Microsoft.Win32;
 
 namespace NetworkL
@@ -26,7 +28,7 @@ namespace NetworkL
         public static int INTERNET_OPTION_SETTINGS_CHANGED = 39;
         public static int INTERNET_OPTION_REFRESH = 37;
 
-        public static void refresh()
+        public static void Refresh()
         {
             InternetSetOption(IntPtr.Zero,
                 INTERNET_OPTION_SETTINGS_CHANGED, IntPtr.Zero, 0);
@@ -38,63 +40,72 @@ namespace NetworkL
     [Serializable]
     public class Network
     {
-        public string name;
-        public TriggerMethod triggerMethod = TriggerMethod.INVALID;
-        public string triggerQuery;
+        public string Name = "";
+        public const ushort CURRENT_DATA_VERSION = 2;
+        public ushort DataVersion = CURRENT_DATA_VERSION;
 
-        public bool enableProxy, enableAutoConfig, localException, useCommonProxy;
-        public string httpProxy, httpsProxy, ftpProxy, socksProxy;
-        public ushort httpPort, httpsPort, ftpPort, socksPort;
+        public TriggerMethod TriggerMethod = TriggerMethod.INVALID;
+        public string TriggerQuery;
 
-        public string proxyExceptions, autoConfigScript;
-        public string connectScript, disconnectScript;
+        public bool? EnableProxy = null;
+        public bool EnableAutoConfig, LocalException, UseCommonProxy;
+        public string HttpProxy, HttpsProxy, FtpProxy, SocksProxy;
+        public ushort HttpPort, HttpsPort, FtpPort, SocksPort;
+
+        public string ProxyExceptions, AutoConfigScript;
+        public string ConnectScript, DisconnectScript;
+
+        private static XmlSerializer serializer =
+            new XmlSerializer(typeof(Network));
 
         public Network() { }
 
         // from http://stackoverflow.com/a/26273084
         // by https://stackoverflow.com/users/146457/131
-        public void setIEProxy()
+        public void SetIEProxy()
         {
+            if (EnableProxy == null) return;
+
             const string userRoot = "HKEY_CURRENT_USER";
             const string subkey = @"Software\Microsoft\Windows\CurrentVersion\Internet Settings";
             const string keyName = userRoot + "\\" + subkey;
 
-            if (enableAutoConfig)
+            if (EnableAutoConfig)
             {
-                if (!String.IsNullOrEmpty(autoConfigScript))
-                    Registry.SetValue(keyName, "AutoConfigURL", autoConfigScript);
+                if (!String.IsNullOrEmpty(AutoConfigScript))
+                    Registry.SetValue(keyName, "AutoConfigURL", AutoConfigScript);
 
                 Registry.SetValue(keyName, "ProxyEnable", 0);
             }
             else
             {
                 string proxyServerValue = "";
-                if (useCommonProxy)
+                if (UseCommonProxy)
                 {
-                    proxyServerValue = String.Format("{0}:{1}", httpProxy, httpPort);
+                    proxyServerValue = String.Format("{0}:{1}", HttpProxy, HttpPort);
                 }
                 else
                 {
 
                     List<string> proxyParts = new List<string>();
-                    if (!String.IsNullOrEmpty(httpProxy))
-                        proxyParts.Add(String.Format("http={0}:{1}", httpProxy, httpPort));
-                    if (!String.IsNullOrEmpty(httpsProxy))
-                        proxyParts.Add(String.Format("https={0}:{1}", httpsProxy, httpsPort));
-                    if (!String.IsNullOrEmpty(ftpProxy))
-                        proxyParts.Add(String.Format("ftp={0}:{1}", ftpProxy, ftpPort));
-                    if (!String.IsNullOrEmpty(socksProxy))
-                        proxyParts.Add(String.Format("socks={0}:{1}", socksProxy, socksPort));
+                    if (!String.IsNullOrEmpty(HttpProxy))
+                        proxyParts.Add(String.Format("http={0}:{1}", HttpProxy, HttpPort));
+                    if (!String.IsNullOrEmpty(HttpsProxy))
+                        proxyParts.Add(String.Format("https={0}:{1}", HttpsProxy, HttpsPort));
+                    if (!String.IsNullOrEmpty(FtpProxy))
+                        proxyParts.Add(String.Format("ftp={0}:{1}", FtpProxy, FtpPort));
+                    if (!String.IsNullOrEmpty(SocksProxy))
+                        proxyParts.Add(String.Format("socks={0}:{1}", SocksProxy, SocksPort));
 
                     proxyServerValue = String.Join(";", proxyParts.ToArray());
                 }
                 Registry.SetValue(keyName, "ProxyServer", proxyServerValue);
-                Registry.SetValue(keyName, "ProxyEnable", enableProxy ? 1 : 0);
+                Registry.SetValue(keyName, "ProxyEnable", (EnableProxy == true) ? 1 : 0);
 
                 string proxyExceptionsValue = "";
-                if (!String.IsNullOrEmpty(proxyExceptions))
-                    proxyExceptionsValue += proxyExceptions;
-                if (localException)
+                if (!String.IsNullOrEmpty(ProxyExceptions))
+                    proxyExceptionsValue += ProxyExceptions;
+                if (LocalException)
                 {
                     if (proxyExceptionsValue.Length > 0)
                         proxyExceptionsValue += ";";
@@ -105,18 +116,23 @@ namespace NetworkL
             }
 
             // Refresh IE proxy settings
-            INetRefresh.refresh();
+            INetRefresh.Refresh();
         }
 
-        public bool testForTrigger()
+        public void Run()
+        {
+
+        }
+
+        public bool TestForTrigger()
         {
             SimpleWifi.Wifi wlan = new SimpleWifi.Wifi();
-            switch (triggerMethod)
+            switch (TriggerMethod)
             {
                 case TriggerMethod.CONNECTED_AP:
                     foreach (SimpleWifi.AccessPoint ap in wlan.GetAccessPoints())
                     {
-                        if (ap.IsConnected && ap.Name == triggerQuery)
+                        if (ap.IsConnected && ap.Name == TriggerQuery)
                             return true;
                     }
                     return false;
@@ -124,7 +140,7 @@ namespace NetworkL
                 case TriggerMethod.AVAILABLE_AP:
                     foreach (SimpleWifi.AccessPoint ap in wlan.GetAccessPoints())
                     {
-                        if (ap.Name == triggerQuery)
+                        if (ap.Name == TriggerQuery)
                             return true;
                     }
                     return false;
@@ -133,12 +149,98 @@ namespace NetworkL
                     return false;
 
                 case TriggerMethod.SERVER_REACHABLE:
-                    PingReply reply = (new Ping()).Send(triggerQuery);
+                    PingReply reply = (new Ping()).Send(TriggerQuery);
                     return reply.Status == IPStatus.Success;
 
                 default:
                     return false;
             }
+        }
+
+        public void Save()
+        {
+            FileStream stream = File.Create(GetFileName(Name));
+            serializer.Serialize(stream, this);
+            stream.Close();
+        }
+
+        public static string GetFolder()
+        {
+            string folder = Environment.GetFolderPath(
+                Environment.SpecialFolder.ApplicationData);
+            string myFolder = Path.Combine(folder, @"AutoProxy\Networks");
+
+            if (!Directory.Exists(myFolder))
+                Directory.CreateDirectory(myFolder);
+
+            return myFolder;
+        }
+
+        public static string GetFileName(string name)
+        {
+            char[] invalids = Path.GetInvalidFileNameChars();
+            name = String.Join("_", name.Split(invalids,
+                StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
+            string filename = String.Format("{0}.xml", name);
+
+            return Path.Combine(GetFolder(), filename);
+        }
+
+        public static List<Network> LoadNetworks()
+        {
+            List<Network> list = new List<Network>();
+            XmlSerializer serializer =
+                new XmlSerializer(typeof(Network));
+            FileStream stream;
+
+            bool foundDefault = false;
+            foreach (string file in Directory.GetFiles(GetFolder()))
+            {
+                if (Path.GetExtension(file) == ".xml")
+                {
+                    try
+                    {
+                        stream = File.Open(file, FileMode.Open);
+                        Network nw = (Network)serializer.Deserialize(stream);
+                        stream.Close();
+                        if (nw == null || nw.DataVersion < Network.CURRENT_DATA_VERSION)
+                            continue;
+
+                        if (nw.Name == "default")
+                            foundDefault = true;
+                        list.Add(nw);
+                    }
+                    catch (IOException) { }
+                }
+            }
+
+            if (!foundDefault)
+            {
+                Network defaultNw = new Network();
+                defaultNw.Name = "default";
+                list.Add(defaultNw);
+            }
+
+            return list;
+        }
+
+        public static Network CheckNetworks(List<Network> list)
+        {
+            Network defaultNetwork = null;
+            foreach (Network nw in list)
+            {
+                if (nw.Name == "default")
+                {
+                    defaultNetwork = nw;
+                    continue;
+                }
+
+                if (nw.TestForTrigger())
+                {
+                    return nw;
+                }
+            }
+            return defaultNetwork;
         }
     }
 }
