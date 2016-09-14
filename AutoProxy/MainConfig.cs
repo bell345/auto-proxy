@@ -325,16 +325,8 @@ namespace AutoProxy
 
         private void checkButton_Click(object sender, EventArgs e)
         {
-            UpdateNetwork(GetCurrentNetwork());
-            Network activeNetwork = Network.CheckNetworks(networkList);
-            if (activeNetwork == null)
-            {
-                MessageBox.Show(this, "No network active.", "AutoProxy");
-            } else
-            {
-                MessageBox.Show(this, String.Format("Network {0} active.",
-                    activeNetwork.Name), "AutoProxy");
-            }
+            activeNetwork = null;
+            CheckActiveNetwork(null, null);
         }
 
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
