@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AutoProxy
@@ -101,5 +94,20 @@ namespace AutoProxy
             }
         }
         #endregion
+
+        private void gnuLgplLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.gnu.org/licenses/lgpl-3.0.txt");
+        }
+
+        private void kdeLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(kdeLink.Text);
+        }
+
+        private void iconSvgLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://quickgit.kde.org/?p=oxygen-icons.git&a=blob&f=scalable%2Fcategories%2Fapplications-internet.svgz&o=plain");
+        }
     }
 }

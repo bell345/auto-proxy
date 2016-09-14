@@ -1,9 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
@@ -65,20 +62,21 @@ namespace NetworkL
         public void SetIEProxy()
         {
             if (EnableProxy == null) return;
-
-            const string userRoot = "HKEY_CURRENT_USER";
+            
             const string subkey = @"Software\Microsoft\Windows\CurrentVersion\Internet Settings";
-            const string keyName = userRoot + "\\" + subkey;
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(subkey);
 
             if (EnableAutoConfig)
             {
                 if (!String.IsNullOrEmpty(AutoConfigScript))
-                    Registry.SetValue(keyName, "AutoConfigURL", AutoConfigScript);
+                    key.SetValue("AutoConfigURL", AutoConfigScript);
 
-                Registry.SetValue(keyName, "ProxyEnable", 0);
+                key.SetValue("ProxyEnable", 0);
             }
             else
             {
+                key.DeleteValue("AutoConfigURL", false);
+
                 string proxyServerValue = "";
                 if (UseCommonProxy)
                 {
@@ -99,8 +97,8 @@ namespace NetworkL
 
                     proxyServerValue = String.Join(";", proxyParts.ToArray());
                 }
-                Registry.SetValue(keyName, "ProxyServer", proxyServerValue);
-                Registry.SetValue(keyName, "ProxyEnable", (EnableProxy == true) ? 1 : 0);
+                key.SetValue("ProxyServer", proxyServerValue);
+                key.SetValue("ProxyEnable", (EnableProxy == true) ? 1 : 0);
 
                 string proxyExceptionsValue = "";
                 if (!String.IsNullOrEmpty(ProxyExceptions))
@@ -112,16 +110,26 @@ namespace NetworkL
                     proxyExceptionsValue += "<local>";
                 }
 
-                Registry.SetValue(keyName, "ProxyOverride", proxyExceptionsValue);
+                key.SetValue("ProxyOverride", proxyExceptionsValue);
             }
+            key.Close();
 
             // Refresh IE proxy settings
             INetRefresh.Refresh();
         }
 
-        public void Run()
+        public void OnConnect()
         {
+            if (!String.IsNullOrEmpty(ConnectScript))
+                System.Diagnostics.Process.Start(ConnectScript);
 
+            SetIEProxy();
+        }
+
+        public void OnDisconnect()
+        {
+            if (!String.IsNullOrEmpty(DisconnectScript))
+                System.Diagnostics.Process.Start(DisconnectScript);
         }
 
         public bool TestForTrigger()
@@ -162,6 +170,11 @@ namespace NetworkL
             FileStream stream = File.Create(GetFileName(Name));
             serializer.Serialize(stream, this);
             stream.Close();
+        }
+
+        public void Delete()
+        {
+            File.Delete(GetFileName(Name));
         }
 
         public static string GetFolder()

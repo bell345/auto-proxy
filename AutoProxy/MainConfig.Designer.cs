@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainConfig));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.removeNetworkButton = new System.Windows.Forms.Button();
             this.newNetworkButton = new System.Windows.Forms.Button();
             this.networkNameBox = new System.Windows.Forms.ComboBox();
             this.triggerGroup = new System.Windows.Forms.GroupBox();
@@ -66,14 +69,18 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applyButton = new System.Windows.Forms.Button();
             this.checkButton = new System.Windows.Forms.Button();
-            this.removeNetworkButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.triggerGroup.SuspendLayout();
             this.proxyGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.proxyPortUpDown)).BeginInit();
             this.scriptGroup.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -89,6 +96,16 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Select/Create Network";
+            // 
+            // removeNetworkButton
+            // 
+            this.removeNetworkButton.Location = new System.Drawing.Point(181, 18);
+            this.removeNetworkButton.Name = "removeNetworkButton";
+            this.removeNetworkButton.Size = new System.Drawing.Size(75, 23);
+            this.removeNetworkButton.TabIndex = 2;
+            this.removeNetworkButton.Text = "Remove";
+            this.removeNetworkButton.UseVisualStyleBackColor = true;
+            this.removeNetworkButton.Click += new System.EventHandler(this.removeNetworkButton_Click);
             // 
             // newNetworkButton
             // 
@@ -414,7 +431,7 @@
             // 
             // connectFileDialog
             // 
-            this.connectFileDialog.FileName = "connect.bat";
+            this.connectFileDialog.FileName = "connect.vbs";
             this.connectFileDialog.Filter = "VBScript files|*.vbs;*.vbe|JScript files|*.js;*.jse|WSH files|*.wsf;*.wsh|Batch f" +
     "iles|*.bat;*.cmd|Executable files|*.com;*.exe";
             // 
@@ -446,7 +463,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -461,7 +478,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -488,16 +505,6 @@
             this.checkButton.UseVisualStyleBackColor = true;
             this.checkButton.Click += new System.EventHandler(this.checkButton_Click);
             // 
-            // removeNetworkButton
-            // 
-            this.removeNetworkButton.Location = new System.Drawing.Point(181, 18);
-            this.removeNetworkButton.Name = "removeNetworkButton";
-            this.removeNetworkButton.Size = new System.Drawing.Size(75, 23);
-            this.removeNetworkButton.TabIndex = 2;
-            this.removeNetworkButton.Text = "Remove";
-            this.removeNetworkButton.UseVisualStyleBackColor = true;
-            this.removeNetworkButton.Click += new System.EventHandler(this.removeNetworkButton_Click);
-            // 
             // label3
             // 
             this.label3.Location = new System.Drawing.Point(12, 152);
@@ -506,6 +513,38 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "Proxy: ";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyIcon.BalloonTipText = "AutoProxy has minimised to the tray.";
+            this.notifyIcon.BalloonTipTitle = "AutoProxy";
+            this.notifyIcon.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "AutoProxy";
+            this.notifyIcon.Visible = true;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openConfigToolStripMenuItem,
+            this.exitToolStripMenuItem1});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(140, 48);
+            // 
+            // openConfigToolStripMenuItem
+            // 
+            this.openConfigToolStripMenuItem.Name = "openConfigToolStripMenuItem";
+            this.openConfigToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.openConfigToolStripMenuItem.Text = "Open Config";
+            this.openConfigToolStripMenuItem.Click += new System.EventHandler(this.openConfigToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem1
+            // 
+            this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(139, 22);
+            this.exitToolStripMenuItem1.Text = "Exit";
+            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
             // MainConfig
             // 
@@ -523,9 +562,11 @@
             this.Controls.Add(this.enableProxyButton);
             this.Controls.Add(this.automaticProxyButton);
             this.Controls.Add(this.disableProxyButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainConfig";
             this.Text = "Auto Proxy";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainConfig_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.triggerGroup.ResumeLayout(false);
             this.triggerGroup.PerformLayout();
@@ -536,6 +577,7 @@
             this.scriptGroup.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -583,6 +625,10 @@
         private System.Windows.Forms.Button checkButton;
         private System.Windows.Forms.Button removeNetworkButton;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem openConfigToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
     }
 }
 

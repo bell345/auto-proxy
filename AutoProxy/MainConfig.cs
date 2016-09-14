@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using NetworkL;
 
@@ -15,6 +11,9 @@ namespace AutoProxy
     {
         public List<Network> networkList;
         public string currentNetworkName = null;
+
+        public Network activeNetwork = null;
+        public Timer networkCheckTimer = new Timer();
 
         private static Dictionary<TriggerMethod, string> triggerMethodMap = null;
 
@@ -39,6 +38,10 @@ namespace AutoProxy
 
             currentNetworkName = "default";
             networkNameBox.SelectedItem = "default";
+
+            networkCheckTimer.Interval = 5000; // 5 seconds
+            networkCheckTimer.Tick += CheckActiveNetwork;
+            networkCheckTimer.Start();
         }
 
         public Network GetCurrentNetwork()
@@ -76,6 +79,15 @@ namespace AutoProxy
                 MessageBox.Show(this, "Cannot remove final network.", "AutoProxy");
                 return;
             }
+
+            if (MessageBox.Show(this, 
+                    "Are you sure you want to remove this network? This action cannot be undone.", 
+                    "AutoProxy", MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Exclamation) != DialogResult.Yes)
+            {
+                return;
+            }
+
             currentNetworkName = "default";
 
             Network network = networkList.Find(nw => (nw.Name == name));
@@ -88,6 +100,7 @@ namespace AutoProxy
             networkList.Remove(network);
             networkNameBox.Text = "default";
             networkNameBox.Items.Remove(name);
+            network.Delete();
 
             UpdateFields(GetCurrentNetwork());
         }
@@ -218,7 +231,7 @@ namespace AutoProxy
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            exitOptionallySaving();
         }
 
         private void networkNameBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -321,6 +334,75 @@ namespace AutoProxy
             {
                 MessageBox.Show(this, String.Format("Network {0} active.",
                     activeNetwork.Name), "AutoProxy");
+            }
+        }
+
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            exitOptionallySaving();
+        }
+
+        private void MainConfig_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                this.Hide();
+                e.Cancel = true;
+                notifyIcon.ShowBalloonTip(2000);
+            }
+        }
+
+        private void openConfigToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
+        private void exitOptionallySaving()
+        {
+            UpdateNetwork(GetCurrentNetwork());
+            if (MessageBox.Show(this, 
+                "Would you like to save the configuration before you exit?",
+                "AutoProxy",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Asterisk) != DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+
+            foreach (Network nw in networkList)
+            {
+                try
+                {
+                    nw.Save();
+                } catch (Exception ex)
+                {
+                    MessageBox.Show(this, String.Format("Failed to save {0}: {1}",
+                        Network.GetFileName(nw.Name), ex.Message), "AutoProxy");
+                    return;
+                }
+            }
+            MessageBox.Show(this, "Saved successfully.", "AutoProxy");
+            Application.Exit();
+        }
+
+        private void CheckActiveNetwork(object sender, EventArgs e)
+        {
+            Network nw = Network.CheckNetworks(networkList);
+            if (nw != activeNetwork)
+            {
+                if (activeNetwork != null)
+                {
+                    activeNetwork.OnDisconnect();
+                }
+
+                if (nw != null)
+                {
+                    nw.OnConnect();
+                    activeNetwork = nw;
+                    notifyIcon.ShowBalloonTip(2000, "AutoProxy", 
+                        String.Format("Connected to {0}", nw.Name), 
+                        ToolTipIcon.Info);
+                }
             }
         }
     }
