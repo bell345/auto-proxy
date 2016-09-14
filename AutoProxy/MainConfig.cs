@@ -15,6 +15,8 @@ namespace AutoProxy
         public Network activeNetwork = null;
         public Timer networkCheckTimer = new Timer();
 
+        private bool updatingFields = false;
+
         private static Dictionary<TriggerMethod, string> triggerMethodMap = null;
 
         public MainConfig()
@@ -107,6 +109,9 @@ namespace AutoProxy
 
         public Network UpdateNetwork(Network nw)
         {
+            if (updatingFields)
+                return nw;
+
             if (nw.Name != "default")
             {
                 nw.TriggerMethod = ((KeyValuePair<TriggerMethod, string>)triggerMethodCombo.SelectedItem).Key;
@@ -170,6 +175,7 @@ namespace AutoProxy
 
         public void UpdateFields(Network nw)
         {
+            updatingFields = true;
             if (nw.Name != "default" && nw.TriggerMethod != TriggerMethod.INVALID)
             {
                 triggerMethodCombo.SelectedItem = new KeyValuePair<TriggerMethod, string>(
@@ -222,6 +228,7 @@ namespace AutoProxy
             }
 
             scriptGroup.Enabled = (nw.Name != "default");
+            updatingFields = false;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -321,10 +328,12 @@ namespace AutoProxy
                 }
             }
             MessageBox.Show(this, "Saved successfully.", "AutoProxy");
+            CheckActiveNetwork(null, null);
         }
 
         private void checkButton_Click(object sender, EventArgs e)
         {
+            UpdateNetwork(GetCurrentNetwork());
             activeNetwork = null;
             CheckActiveNetwork(null, null);
         }
@@ -352,14 +361,14 @@ namespace AutoProxy
         private void exitOptionallySaving()
         {
             UpdateNetwork(GetCurrentNetwork());
-            if (MessageBox.Show(this, 
+            /*if (MessageBox.Show(this, 
                 "Would you like to save the configuration before you exit?",
                 "AutoProxy",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Asterisk) != DialogResult.Yes)
             {
                 Application.Exit();
-            }
+            }*/
 
             foreach (Network nw in networkList)
             {
@@ -370,10 +379,10 @@ namespace AutoProxy
                 {
                     MessageBox.Show(this, String.Format("Failed to save {0}: {1}",
                         Network.GetFileName(nw.Name), ex.Message), "AutoProxy");
-                    return;
+                    //return;
                 }
             }
-            MessageBox.Show(this, "Saved successfully.", "AutoProxy");
+            //MessageBox.Show(this, "Saved successfully.", "AutoProxy");
             Application.Exit();
         }
 
@@ -382,6 +391,9 @@ namespace AutoProxy
             Network nw = Network.CheckNetworks(networkList);
             if (nw != activeNetwork)
             {
+                if (activeNetwork != null && nw != null && nw.Name == activeNetwork.Name)
+                    return;
+
                 if (activeNetwork != null)
                 {
                     activeNetwork.OnDisconnect();
